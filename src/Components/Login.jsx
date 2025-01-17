@@ -1,55 +1,88 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../Utils/Validate.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../utils/Firebase.js";
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../Utils/Firebase.js";
+import { useDispatch } from "react-redux";
+import { addUser } from "../Utils/userSlice.js";
 const Login = () => {
-  const [isSignIn, setIsSign] = useState(true);
+  const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null); //this will give all the value input that are present in the input field
+  const dispatch = useDispatch();
   const toggleSignInForm = () => {
-    setIsSign(!isSignIn);
+    setIsSignInForm(!isSignInForm);
   };
   const handleButtonClick = () => {
-    //Validate
     const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
     if (message) return;
-    if (!isSignIn) {
-      //Sign up Logic
+  
+    if (!isSignInForm) {
+      if (!name.current || !name.current.value.trim()) {
+        setErrorMessage("Full Name is required for Sign Up.");
+        return;
+      }
+  
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
         .then((userCredential) => {
-          // Signed up
-          //this will add the user to database and get the user logged in
           const user = userCredential.user;
-          console.log(user);
+          console.log("User created:", user);
+          updateProfile(user, {
+            displayName: name.current.value.trim(),
+            photoURL:
+              "https://occ-0-6247-2164.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABdpkabKqQAxyWzo6QW_ZnPz1IZLqlmNfK-t4L1VIeV1DY00JhLo_LMVFp936keDxj-V5UELAVJrU--iUUY2MaDxQSSO-0qw.png?r=e6e",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              console.log("Profile updated:", { displayName, photoURL });
+              dispatch(
+                addUser({
+                  uid,
+                  email,
+                  displayName,
+                  photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              console.error("Error updating profile:", error);
+              setErrorMessage(error.message);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
+          console.error("Error creating user:", errorCode, errorMessage);
           setErrorMessage(errorMessage + "-" + errorCode);
         });
     } else {
-      //Sign in Logic
-      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
-          // Signed in
           const user = userCredential.user;
-          console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
+          console.error("Error signing in:", errorCode, errorMessage);
           setErrorMessage(errorMessage + "-" + errorCode);
         });
     }
-  };
+  };  
   return (
     <div>
       <Header />
@@ -64,10 +97,11 @@ const Login = () => {
         className="w-3-12-custom p-12 bg-black absolute my-36 mx-auto right-0 left-0 text-white bg-opacity-80"
       >
         <h1 className="font-bold text-3xl mb-5 ">
-          {isSignIn ? "Sign In" : "Sign Up"}
+          {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
-        {!isSignIn && (
+        {!isSignInForm && (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="p-2 my-4 w-full bg-black rounded-sm border border-white focus:outline-none focus:ring-2 focus:ring-red-600 opacity-55 "
@@ -91,7 +125,7 @@ const Login = () => {
           className="p-3 my-6 bg-red-600 w-full rounded-lg"
           onClick={handleButtonClick}
         >
-          {isSignIn ? "Sign In" : "Sign Up"}
+          {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <div className="flex items-center space-x-2">
           <input
@@ -107,7 +141,7 @@ const Login = () => {
           className="py-4 text-center text-gray-300 cursor-pointer hover:underline"
           onClick={toggleSignInForm}
         >
-          {isSignIn
+          {isSignInForm
             ? "New to Netflix? Sign Up Now"
             : "Already have an account? Sign In"}
         </p>

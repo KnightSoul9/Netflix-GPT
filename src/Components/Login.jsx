@@ -9,6 +9,7 @@ import {
 import { auth } from "../Utils/Firebase.js";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice.js";
+import { USER_AVATAR } from '../Utils/constants';
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -40,8 +41,7 @@ const Login = () => {
           console.log("User created:", user);
           updateProfile(user, {
             displayName: name.current.value.trim(),
-            photoURL:
-              "https://occ-0-6247-2164.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABdpkabKqQAxyWzo6QW_ZnPz1IZLqlmNfK-t4L1VIeV1DY00JhLo_LMVFp936keDxj-V5UELAVJrU--iUUY2MaDxQSSO-0qw.png?r=e6e",
+            photoURL:{USER_AVATAR},
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;

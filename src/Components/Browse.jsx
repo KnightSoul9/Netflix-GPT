@@ -20,24 +20,22 @@ const Browse = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Fixed Header */}
       <Header />
       
-      {/* Main Content with smooth transitions */}
-      <div className="w-full transition-all duration-300 ease-in-out">
-        {showGptSearch ? (
-          <div className="animate-fadeIn">
-            <GptSearch />
-          </div>
-        ) : (
-          <div className="animate-slideUp relative">
+      {showGptSearch ? (
+        <div className="animate-fadeIn pt-16">
+          <GptSearch />
+        </div>
+      ) : (
+        <div className="flex flex-col lg:flex-row">
+          <div className="lg:w-full">
             <MainContainer />
-            <div className="relative md:absolute md:top-[60vh] left-0 right-0 z-30">
-              <SecondaryContainer />
-            </div>
           </div>
-        )}
-      </div>
+          <div className="relative z-30 lg:absolute lg:top-[100vh] lg:left-0 lg:right-0">
+            <SecondaryContainer />
+          </div>
+        </div>
+      )}
 
       {/* Gradient overlay for smooth transitions */}
       <div className="fixed bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>

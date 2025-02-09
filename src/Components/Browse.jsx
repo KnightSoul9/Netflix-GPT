@@ -30,9 +30,11 @@ const Browse = () => {
             <GptSearch />
           </div>
         ) : (
-          <div className="animate-slideUp">
+          <div className="animate-slideUp relative">
             <MainContainer />
-            <SecondaryContainer />
+            <div className="relative md:absolute md:top-[60vh] left-0 right-0 z-30">
+              <SecondaryContainer />
+            </div>
           </div>
         )}
       </div>

@@ -31,5 +31,5 @@ git clone https://github.com/yourusername/netflix-gpt.git
 cd netflix-gpt
 
 
-This is properly formatted for a **GitHub `README.md`** file. Just copy and paste it into your **`README.md`** file, and it will be displayed properly on GitHub! 🚀🔥
+
 

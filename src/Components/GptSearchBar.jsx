@@ -71,20 +71,20 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-[40%] sm:pt-[30%] md:pt-[20%] lg:pt-[8%] px-2 sm:px-4 md:px-8 max-w-[95%] lg:max-w-[80%] mx-auto">
+    <div className="pt-[35%] sm:pt-[25%] md:pt-[15%] lg:pt-[10%] px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
       <form 
-        className="w-full mx-auto bg-black/80 backdrop-blur-md p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl"
+        className="w-full max-w-3xl mx-auto bg-black/80 backdrop-blur-md p-6 rounded-xl shadow-2xl"
         onSubmit={(e) => e.preventDefault()}
       >
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <input
             ref={searchText}
             type="text"
-            className="flex-grow px-4 sm:px-6 py-3 sm:py-4 lg:py-5 rounded-xl text-base sm:text-lg lg:text-xl bg-white/10 text-white border border-gray-600 focus:border-purple-500 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
+            className="flex-grow px-6 py-4 rounded-xl text-lg bg-white/10 text-white border border-gray-600 focus:border-purple-500 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
             placeholder={lang[langKey]?.gptSearchPlaceholder || "Search for movies..."}
           />
           <button
-            className="px-6 sm:px-8 py-3 sm:py-4 lg:py-5 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-purple-900 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/30 text-base sm:text-lg lg:text-xl"
+            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-purple-900 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/30 text-lg"
             onClick={handleGptSearchClick}
           >
             {lang[langKey]?.search || "Search"}

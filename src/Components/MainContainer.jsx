@@ -9,9 +9,12 @@ const MainContainer = () => {
     const mainMovie = movies[11];
     const {original_title,overview,id} = mainMovie;
   return (
-    <div>
+    <div className="relative w-screen">
+      <VideoBackground movieId={id}/>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70 z-5"></div>
+      <div className="absolute inset-0 z-20 bg-black/30">
         <VideoTitle title={original_title} overview={overview}/>
-         <VideoBackground movieId={id}/>
+      </div>
     </div>
   )
 }

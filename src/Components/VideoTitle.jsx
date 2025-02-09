@@ -1,11 +1,21 @@
+import { FaPlay } from "react-icons/fa";
+import { IoInformationCircle } from "react-icons/io5";
+
 const VideoTitle = ({title,overview}) => {
+  // Limit overview to 15 words
+  const limitedOverview = overview.split(' ').slice(0, 15).join(' ') + (overview.split(' ').length > 15 ? '...' : '');
+
   return (
-    <div className='pt-[30%] px-12 absolute w-screen aspect-video text-white bg-gradient-to-r from-slate-900 '>
-        <h1 className="text-4xl font-bold text-slate-300">{title}</h1>
-        <p className="py-6 text-lg w-1/2 text-slate-300">{overview}</p>
-        <div>
-            <button className="my-2 bg-white text-black p-4 px-12 text-xl rounded-lg hover:bg-opacity-80"> ▶️ Play</button>
-            <button className="mx-4 my-2 bg-gray-500 text-white p-4 px-12 text-xl bg-opacity-50 rounded-lg hover:bg-opacity-80">More Info</button>
+    <div className='w-screen aspect-video absolute text-white flex flex-col justify-end pb-[8%] px-6 md:px-12'>
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white/90 drop-shadow-lg">{title}</h1>
+        <p className="hidden md:block py-4 md:py-6 text-sm md:text-lg lg:text-xl w-[90%] md:w-1/2 text-white/80">{limitedOverview}</p>
+        <div className="flex flex-wrap gap-3 mt-2">
+            <button className="bg-white/90 text-black py-2 md:py-4 px-6 md:px-12 text-sm md:text-xl rounded-lg hover:bg-opacity-90 transition-all flex items-center gap-2">
+                <FaPlay className="text-lg md:text-2xl" /> Play
+            </button>
+            <button className="bg-gray-500/70 text-white py-2 md:py-4 px-6 md:px-12 text-sm md:text-xl rounded-lg hover:bg-opacity-90 transition-all flex items-center gap-2">
+                <IoInformationCircle className="text-xl md:text-3xl" /> More Info
+            </button>
         </div>
     </div>
   )

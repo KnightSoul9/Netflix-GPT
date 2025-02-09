@@ -8,3 +8,10 @@ export const API_OPTIONS ={
     }
 }
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
+export const BG_URL = 'https://assets.nflxext.com/ffe/siteui/vlv3/154a9550-ce07-4e28-819c-63185dd849f8/web/IN-en-20250106-TRIFECTA-perspective_27b02e7c-f668-4639-9e82-1a5485084b2a_large.jpg'
+export const SUPPORTED_LANGUAGES = [
+    { identifier: "en", name: "English" },
+    { identifier: "hindi", name: "Hindi" },
+    { identifier: "spanish", name: "Spanish" },
+  ];
+export const OPENAI_key='5ec9dfc1c68571fcdb3b6978cbf4f88ff1c0900d1d98b5d7c6bb1138e4ae339a'

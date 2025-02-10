@@ -15,6 +15,12 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [passwordStrength, setPasswordStrength] = useState({
+    hasCapital: false,
+    hasSpecial: false,
+    hasNumber: false,
+    isLongEnough: false
+  });
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
@@ -23,19 +29,41 @@ const Login = () => {
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
+    setPasswordStrength({
+      hasCapital: false,
+      hasSpecial: false,
+      hasNumber: false,
+      isLongEnough: false
+    });
+  };
+
+  const checkPasswordStrength = (value) => {
+    setPasswordStrength({
+      hasCapital: /[A-Z]/.test(value),
+      hasSpecial: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+      hasNumber: /[0-9]/.test(value),
+      isLongEnough: value.length >= 8
+    });
   };
 
   const handleButtonClick = () => {
     const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
     if (message) return;
-  
+
     if (!isSignInForm) {
       if (!name.current || !name.current.value.trim()) {
         setErrorMessage("Full Name is required for Sign Up.");
         return;
       }
-  
+
+      // Additional password validation for signup
+      if (!passwordStrength.hasCapital || !passwordStrength.hasSpecial || 
+          !passwordStrength.hasNumber || !passwordStrength.isLongEnough) {
+        setErrorMessage("Password must meet all the requirements below");
+        return;
+      }
+
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -123,8 +151,26 @@ const Login = () => {
             ref={password}
             type="password"
             placeholder="Password"
+            onChange={(e) => !isSignInForm && checkPasswordStrength(e.target.value)}
             className="p-3 my-4 w-full bg-zinc-800 text-white rounded-md border border-zinc-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent transition-all duration-300"
           />
+
+          {!isSignInForm && (
+            <div className="text-sm text-gray-300 space-y-1 mb-4">
+              <p className={passwordStrength.isLongEnough ? "text-green-500" : "text-red-500"}>
+                ● Minimum 8 characters long
+              </p>
+              <p className={passwordStrength.hasCapital ? "text-green-500" : "text-red-500"}>
+                ● Contains at least one capital letter
+              </p>
+              <p className={passwordStrength.hasNumber ? "text-green-500" : "text-red-500"}>
+                ● Contains at least one number
+              </p>
+              <p className={passwordStrength.hasSpecial ? "text-green-500" : "text-red-500"}>
+                ● Contains at least one special character
+              </p>
+            </div>
+          )}
 
           {errorMessage && (
             <p className="text-red-500 text-sm font-medium py-2 animate-pulse">{errorMessage}</p>

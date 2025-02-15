@@ -4,7 +4,7 @@ A Netflix-inspired movie recommendation web app built with **React + Vite**. Thi
 - **Using Vite** instead of Create React App for better performance.  
 - **Together AI** for movie recommendations instead of OpenAI.  
 
-🔥 **Live Demo:** [Netflix GPT]([https://vercel.com/satyams-projects-f7813efa/netflix-gpt/6kFit3zXf4ktrP7MHTGPJdYyjzQv](https://netflix-gpt-woad-two.vercel.app/))  
+🔥 **Live Demo:** [Netflix GPT]([https://vercel.com/satyams-projects-f7813efa/netflix-gpt/6kFit3zXf4ktrP7MHTGPJdYyjzQv](https://netflix-gpt-git-main-satyams-projects-f7813efa.vercel.app))  
 
 ---
 
